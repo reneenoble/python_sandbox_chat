@@ -13,6 +13,7 @@ def run_code(code, token):
     AZURE_TENANT_ID = "b834794e-212a-4d12-81d1-c4b80e81bde0"
     credential = AzureDeveloperCliCredential(tenant_id=AZURE_TENANT_ID, process_timeout=60)
     token = credential.get_token("https://dynamicsessions.io/.default")
+    print(token.token)
 
     session_id = "abc123"
     url = "https://eastasia.dynamicsessions.io/subscriptions/d90264b1-74b1-44b6-af25-a420cf18c61c/resourceGroups/rn-hack-containerapps/sessionPools/test-session1/code/execute?api-version=2024-02-02-preview&identifier=" + session_id
