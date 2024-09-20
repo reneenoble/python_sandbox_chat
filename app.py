@@ -8,7 +8,6 @@ import os
 
 app = Flask(__name__)
 
-print(app.name)
 
 def run_code(code, token):
     AZURE_TENANT_ID = "b834794e-212a-4d12-81d1-c4b80e81bde0"
