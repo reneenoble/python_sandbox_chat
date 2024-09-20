@@ -1,0 +1,62 @@
+<!doctype html>
+<head>
+	<title>Python Sandbox</title>
+	<link href="/static/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="content">
+        <div id="code-output" class="output"></div>
+
+        <div class="entry-form">
+            <form action="" method="post" id="code-form">
+                <input type="text" name="code" id="code" placeholder="Enter your Python code" required />
+                <input type="button" value="Send" id="code-send"/>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    codeSend = document.getElementById("code-send");
+    output = document.getElementById("code-output");
+    codeForm = document.getElementById("code-form");
+    current_context = [];
+    codeForm.onsubmit = (e) => {
+        e.preventDefault()
+        send_message(e.target)
+    }
+    codeSend.onclick = (e) => {
+        e.preventDefault()
+        send_message(e.target.form)
+    }
+
+    function send_message(f) {
+        code = f[0].value
+        const data = {
+            code: code,
+            session_id: "abc123",
+        };
+        f[0].value = ""
+
+        output.innerHTML += "<div class='code message'>" + code + "</div>"
+
+        // Send the POST request using fetch
+        fetch("/post-code", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data)
+            output.innerHTML += "<div class='message response'>" + data.resp + "</div>"
+        })
+        .catch((error) => {
+            console.error("Error:", error)
+            output.innerHTML += "<div class='message response error'>Sorry, there was an error. Please refresh and try again.</div>"
+        });
+    }
+
+</script>
